@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -9,10 +11,12 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import SelfEvaluationPage from "./self-evaluation/page";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { usePathname } from "next/navigation"; // Import usePathname
 
-export default function Home() {
+export default function Home() {  const pathname = usePathname(); // Get the current route
   return (
     <SidebarProvider>
       <Sidebar>
@@ -52,7 +56,7 @@ export default function Home() {
           </p>
         </SidebarFooter>
       </Sidebar>
-      <main className="flex-1 p-4">
+      <main className="flex-1 p-4">{pathname === "/" && (
         <Card>
           <CardHeader>
             <CardTitle>Welcome to Ascend Performance</CardTitle>
@@ -64,6 +68,22 @@ export default function Home() {
             </p>
           </CardContent>
         </Card>
+      )}
+        {pathname === "/self-evaluation" && (
+          //  Instead of linking to the page, render the component directly
+          <SelfEvaluationPage />
+        )}
+        {pathname === "/manager-evaluation" && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Manager Evaluation</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p>This section will display the manager evaluation.</p>
+            </CardContent>
+          </Card>
+        )}
+        {pathname === "/direct-reports" && (<Card><CardHeader><CardTitle>Direct Reports</CardTitle></CardHeader><CardContent><p>This section will display information about direct reports.</p></CardContent></Card>)}
       </main>
     </SidebarProvider>
   );
