@@ -28,7 +28,7 @@ const formSchema = z.object({
   breadthOfInfluence: z.string().optional(),
 });
 
-const SelfEvaluationPage = () => {
+const ManagerEvaluationPage = () => {
   const [insights, setInsights] = useState<GeneratePerformanceInsightsOutput | null>(null);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,20 +48,20 @@ const SelfEvaluationPage = () => {
     const input = {
       employeeId: "123", // Replace with actual employee ID
       selfEvaluation: {
-        sme: parseInt(values.sme || "0"),
-        strategicThinking: parseInt(values.strategicThinking || "0"),
-        execution: parseInt(values.execution || "0"),
-        communication: parseInt(values.communication || "0"),
-        customerFocus: parseInt(values.customerFocus || "0"),
-        breadthOfInfluence: parseInt(values.breadthOfInfluence || "0"),
-      },
-      managerFeedback: {
         sme: 3,  // Dummy value
         strategicThinking: 4, // Dummy value
         execution: 5, // Dummy value
         communication: 3, // Dummy value
         customerFocus: 4, // Dummy value
         breadthOfInfluence: 5, // Dummy value
+      },
+      managerFeedback: {
+        sme: parseInt(values.sme || "0"),
+        strategicThinking: parseInt(values.strategicThinking || "0"),
+        execution: parseInt(values.execution || "0"),
+        communication: parseInt(values.communication || "0"),
+        customerFocus: parseInt(values.customerFocus || "0"),
+        breadthOfInfluence: parseInt(values.breadthOfInfluence || "0"),
       },
     };
 
@@ -73,7 +73,7 @@ const SelfEvaluationPage = () => {
     <main className="flex-1 p-4">
       <Card>
         <CardHeader>
-          <CardTitle>Self Evaluation</CardTitle>
+          <CardTitle>Manager Evaluation</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -181,4 +181,4 @@ const SelfEvaluationPage = () => {
   );
 };
 
-export default SelfEvaluationPage;
+export default ManagerEvaluationPage;
