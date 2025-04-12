@@ -79,30 +79,28 @@ export async function getEmployee(employeeId: string): Promise<Employee | null> 
  * @param managerId The ID of the manager whose direct reports to retrieve. @returns A promise that resolves to an array of Employee objects.
  */
 export async function getDirectReports(managerId: string): Promise<Employee[]> {
-  // TODO: Implement this by calling an API.
-
-  return [
+  const directReports = [
     {
       id: '789',
       name: 'Jane Smith',
       role: 'IC',
       level: 'IC3',
       managerId: managerId,
-    },
+    }, 
     {
       id: '790',
       name: 'Smith Manager',
       role: 'Manager',
       level: 'M3',
       managerId: managerId,
-    },
+    }, 
     {
       id: '791',
       name: 'Smith Director',
       role: 'Director',
       level: 'D1',
       managerId: managerId,
-    },
+    }, 
     {
       id: '792',
       name: 'Smith VP',
@@ -111,4 +109,7 @@ export async function getDirectReports(managerId: string): Promise<Employee[]> {
       managerId: managerId,
     },
   ];
+  // Ensure all employees have managerId as string or null
+  return directReports.map(report => ({ ...report, managerId: report.managerId === null ? null : String(report.managerId) }));
 }
+

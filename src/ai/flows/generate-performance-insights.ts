@@ -13,8 +13,8 @@ import {z} from 'genkit';
 
 const GeneratePerformanceInsightsInputSchema = z.object({
   employeeId: z.string().describe('The ID of the employee.'),
-  selfEvaluation: z.record(z.string(), z.number()).describe('The self-evaluation data for the employee. Each key represents the criteria and the value represents the rating.'),
-  managerFeedback: z.record(z.string(), z.number()).describe('The manager feedback data for the employee. Each key represents the criteria and the value represents the rating.'),
+  selfEvaluation: z.record(z.string(), z.string()).describe('The self-evaluation data for the employee. Each key represents the criteria and the value represents the feedback.'),
+  managerFeedback: z.record(z.string(), z.string()).describe('The manager feedback data for the employee. Each key represents the criteria and the value represents the feedback.'),
 });
 
 export type GeneratePerformanceInsightsInput = z.infer<typeof GeneratePerformanceInsightsInputSchema>;
@@ -35,8 +35,8 @@ const prompt = ai.definePrompt({
   input: {
     schema: z.object({
       employeeId: z.string().describe('The ID of the employee.'),
-      selfEvaluation: z.record(z.string(), z.number()).describe('The self-evaluation data for the employee.'),
-      managerFeedback: z.record(z.string(), z.number()).describe('The manager feedback data for the employee.'),
+      selfEvaluation: z.record(z.string(), z.string()).describe('The self-evaluation data for the employee.'),
+      managerFeedback: z.record(z.string(), z.string()).describe('The manager feedback data for the employee.'),
     }),
   },
   output: {
@@ -47,14 +47,22 @@ const prompt = ai.definePrompt({
   },
   prompt: `You are a performance analysis expert. Analyze the self-evaluation and manager feedback provided below to identify key strengths and areas for improvement for the employee.
 
+  Here's an example of good feedback:
+  "SME: [Self] I have a strong understanding of the core concepts in my domain. [Manager] John is a recognized expert in the team and is often consulted for his knowledge."
+
+  When analyzing the feedback, consider the following:
+  - Look for patterns and themes in the feedback.
+  - Identify specific skills or behaviors mentioned.
+  - Note any discrepancies or agreements between self-evaluation and manager feedback.
+
   Employee ID: {{{employeeId}}}
 
   Self-Evaluation:
   {{#each selfEvaluation}}
-  {{@key}}: {{@value}}
+  {{@key}}: {{#if @value}}{{@value}}{{else}}No feedback provided{{/if}}
   {{/each}}
 
-  Manager Feedback:
+  Manager Feedback: 
   {{#each managerFeedback}}
   {{@key}}: {{@value}}
   {{/each}}

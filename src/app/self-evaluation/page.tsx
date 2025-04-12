@@ -13,7 +13,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Textarea } from "@/components/ui/textarea";
 import { useEffect, useState } from "react";
@@ -21,12 +20,18 @@ import { generatePerformanceInsights, GeneratePerformanceInsightsOutput } from "
 
 const formSchema = z.object({
   sme: z.string().optional(),
-  strategicThinking: z.string().optional(),
-  execution: z.string().optional(),
-  communication: z.string().optional(),
-  customerFocus: z.string().optional(),
-  breadthOfInfluence: z.string().optional(),
+  strategicThinking: z.string(),
+  execution: z.string(),
+  communication: z.string(),
+  customerFocus: z.string(),
+  breadthOfInfluence: z.string(),
 });
+import { useForm } from "react-hook-form";
+
+
+
+
+
 
 const SelfEvaluationPage = () => {
   const [insights, setInsights] = useState<GeneratePerformanceInsightsOutput | null>(null);
@@ -48,12 +53,12 @@ const SelfEvaluationPage = () => {
     const input = {
       employeeId: "123", // Replace with actual employee ID
       selfEvaluation: {
-        sme: parseInt(values.sme || "0"),
-        strategicThinking: parseInt(values.strategicThinking || "0"),
-        execution: parseInt(values.execution || "0"),
-        communication: parseInt(values.communication || "0"),
-        customerFocus: parseInt(values.customerFocus || "0"),
-        breadthOfInfluence: parseInt(values.breadthOfInfluence || "0"),
+        sme: values.sme,
+        strategicThinking: values.strategicThinking,
+        execution: values.execution,
+        communication: values.communication,
+        customerFocus: values.customerFocus,
+        breadthOfInfluence: values.breadthOfInfluence,
       },
       managerFeedback: {
         sme: 3,  // Dummy value
@@ -85,7 +90,7 @@ const SelfEvaluationPage = () => {
                   <FormItem>
                     <FormLabel>SME (Subject Matter Expertise)</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rate your SME" {...field} />
+                      <Textarea placeholder="Describe your SME" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -98,7 +103,7 @@ const SelfEvaluationPage = () => {
                   <FormItem>
                     <FormLabel>Strategic Thinking</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rate your Strategic Thinking" {...field} />
+                      <Textarea placeholder="Describe your Strategic Thinking" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -111,7 +116,7 @@ const SelfEvaluationPage = () => {
                   <FormItem>
                     <FormLabel>Execution</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rate your Execution" {...field} />
+                      <Textarea placeholder="Describe your Execution" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -124,7 +129,7 @@ const SelfEvaluationPage = () => {
                   <FormItem>
                     <FormLabel>Communication</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rate your Communication" {...field} />
+                      <Textarea placeholder="Describe your Communication" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -137,7 +142,7 @@ const SelfEvaluationPage = () => {
                   <FormItem>
                     <FormLabel>Customer Focus</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rate your Customer Focus" {...field} />
+                      <Textarea placeholder="Describe your Customer Focus" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -150,7 +155,7 @@ const SelfEvaluationPage = () => {
                   <FormItem>
                     <FormLabel>Breadth of Influence</FormLabel>
                     <FormControl>
-                      <Input placeholder="Rate your Breadth of Influence" {...field} />
+                      <Textarea placeholder="Describe your Breadth of Influence" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
