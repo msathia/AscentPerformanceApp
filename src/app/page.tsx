@@ -24,7 +24,9 @@ export default function Home() {
           <SidebarGroup>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton>Home</SidebarMenuButton>
+                <Link href="/">
+                  <SidebarMenuButton>Home</SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <Link href="/self-evaluation">
@@ -32,10 +34,14 @@ export default function Home() {
                 </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton>Manager evaluation</SidebarMenuButton>
+                <Link href="/manager-evaluation">
+                  <SidebarMenuButton>Manager evaluation</SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton>Direct Reports</SidebarMenuButton>
+                <Link href="/direct-reports">
+                  <SidebarMenuButton>Direct Reports</SidebarMenuButton>
+                </Link>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroup>
@@ -62,4 +68,3 @@ export default function Home() {
     </SidebarProvider>
   );
 }
-
