@@ -9,6 +9,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
@@ -26,7 +27,12 @@ export default function Home() {
                 <SidebarMenuButton>Home</SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton>My Evaluations</SidebarMenuButton>
+                <Link href="/self-evaluation">
+                  <SidebarMenuButton>Self evaluation</SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton>Manager evaluation</SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton>Direct Reports</SidebarMenuButton>
@@ -56,3 +62,4 @@ export default function Home() {
     </SidebarProvider>
   );
 }
+
