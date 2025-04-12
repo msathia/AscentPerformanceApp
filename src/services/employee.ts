@@ -24,29 +24,59 @@ export interface Employee {
   managerId: string | null;
 }
 
-/**
- * Asynchronously retrieves an employee by their ID.
- *
- * @param employeeId The ID of the employee to retrieve.
- * @returns A promise that resolves to an Employee object, or null if not found.
- */
-export async function getEmployee(employeeId: string): Promise<Employee | null> {
-  // TODO: Implement this by calling an API.
+const employees: Employee[] = [
+  {
+    id: "1",
+    name: "Alice Johnson",
+    role: "VP",
+    level: "VP",
+    managerId: null,
+  },
+  {
+    id: "2",
+    name: "Bob Williams",
+    role: "Director",
+    level: "D1",
+    managerId: "1",
+  },
+  {
+    id: "3",
+    name: "Charlie Brown",
+    role: "Manager",
+    level: "M2",
+    managerId: "2",
+  },
+  {
+    id: "4",
+    name: "Diana Miller",
+    role: "IC",
+    level: "IC4",
+    managerId: "3",
+  },
+  {
+    id: "5",
+    name: "Eva Davis",
+    role: "IC",
+    level: "IC3",
+    managerId: "3",
+  },
+];
 
-  return {
-    id: employeeId,
-    name: 'John Doe',
-    role: 'IC',
-    level: 'IC5',
-    managerId: '456',
-  };
+/**
+* Asynchronously retrieves an employee by their ID.
+*
+* @param employeeId The ID of the employee to retrieve.
+* @returns A promise that resolves to an Employee object, or null if not found.
+*/
+export async function getEmployee(employeeId: string): Promise<Employee | null> {
+  const employee = employees.find((e) => e.id === employeeId);
+  return employee || null;
 }
 
 /**
  * Asynchronously retrieves all direct reports for a given manager ID.
  *
- * @param managerId The ID of the manager whose direct reports to retrieve.
- * @returns A promise that resolves to an array of Employee objects.
+ * @param managerId The ID of the manager whose direct reports to retrieve. @returns A promise that resolves to an array of Employee objects.
  */
 export async function getDirectReports(managerId: string): Promise<Employee[]> {
   // TODO: Implement this by calling an API.
@@ -57,6 +87,27 @@ export async function getDirectReports(managerId: string): Promise<Employee[]> {
       name: 'Jane Smith',
       role: 'IC',
       level: 'IC3',
+      managerId: managerId,
+    },
+    {
+      id: '790',
+      name: 'Smith Manager',
+      role: 'Manager',
+      level: 'M3',
+      managerId: managerId,
+    },
+    {
+      id: '791',
+      name: 'Smith Director',
+      role: 'Director',
+      level: 'D1',
+      managerId: managerId,
+    },
+    {
+      id: '792',
+      name: 'Smith VP',
+      role: 'VP',
+      level: 'VP',
       managerId: managerId,
     },
   ];

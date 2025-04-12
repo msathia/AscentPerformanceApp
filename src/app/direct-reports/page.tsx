@@ -17,7 +17,6 @@ const DirectReportsPage = () => {
   }, []);
 
   return (
-    <main className="flex-1 p-4">
       <Card>
         <CardHeader>
           <CardTitle>Direct Reports</CardTitle>
@@ -34,7 +33,6 @@ const DirectReportsPage = () => {
           )}
         </CardContent>
       </Card>
-    </main>
   );
 };
 

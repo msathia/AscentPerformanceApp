@@ -69,9 +69,20 @@ const ManagerEvaluationPage = () => {
     setInsights(generatedInsights);
   }
 
+  const insightsCard = insights ? (
+    <Card>
+      <CardHeader>
+        <CardTitle>Performance Insights</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p><strong>Strengths:</strong> {insights.strengths}</p>
+        <p><strong>Areas for Improvement:</strong> {insights.areasForImprovement}</p>
+      </CardContent>
+    </Card>
+  ) : null;
   return (
-    <main className="flex-1 p-4">
-      <Card>
+
+    <div><Card>
         <CardHeader>
           <CardTitle>Manager Evaluation</CardTitle>
         </CardHeader>
@@ -160,24 +171,10 @@ const ManagerEvaluationPage = () => {
             </form>
           </Form>
         </CardContent>
-      </Card>
+      </Card>{insightsCard}</div>
 
-      {insights && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Performance Insights</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>
-              <strong>Strengths:</strong> {insights.strengths}
-            </p>
-            <p>
-              <strong>Areas for Improvement:</strong> {insights.areasForImprovement}
-            </p>
-          </CardContent>
-        </Card>
-      )}
-    </main>
+
+
   );
 };
 

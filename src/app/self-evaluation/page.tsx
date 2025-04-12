@@ -70,7 +70,7 @@ const SelfEvaluationPage = () => {
   }
 
   return (
-    <main className="flex-1 p-4">
+    <>
       <Card>
         <CardHeader>
           <CardTitle>Self Evaluation</CardTitle>
@@ -177,7 +177,7 @@ const SelfEvaluationPage = () => {
           </CardContent>
         </Card>
       )}
-    </main>
+    </>
   );
 };
 
