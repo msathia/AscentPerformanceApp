@@ -27,7 +27,16 @@
       enable = true;
       previews = {
         web = {
-          command = ["npm" "run" "dev" "--" "--port" "$PORT" "--hostname" "0.0.0.0"];
+          port = 8081;
+          command = [
+            "go"
+            "build"
+            "-o"
+            "performance-app"
+            "."
+          ] ++ [
+            "./performance-app"
+          ];
           manager = "web";
         };
       };
