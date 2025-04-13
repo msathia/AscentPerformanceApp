@@ -1,13 +1,9 @@
 package main
 
 import (
-	"context"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
-
-	"github.com/a-h/templ"
 )
 
 func main() {
@@ -16,12 +12,15 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
-// Component for rendering the self-evaluation form.
-type SelfEvaluationForm struct{}
-
-func (f SelfEvaluationForm) Render(ctx context.Context, w io.Writer) error {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
-		_, err := w.Write([]byte(`
+// Render the self-evaluation form as plain HTML.
+func renderSelfEvaluationForm(w http.ResponseWriter) {
+	html := `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Self Evaluation</title>
+        </head>
+        <body>
             <form method="POST" action="/self-evaluation">
                 <label for="sme">SME:</label>
                 <input type="text" id="sme" name="sme"><br>
@@ -37,35 +36,18 @@ func (f SelfEvaluationForm) Render(ctx context.Context, w io.Writer) error {
                 <input type="text" id="breadthOfInfluence" name="breadthOfInfluence"><br>
                 <button type="submit">Submit</button>
             </form>
-        `))
-		return err
-	}).Render(ctx, w)
-}
-
-// Component for rendering the form with performance insights.
-type SelfEvaluationFormWithInsights struct {
-	Insights *GeneratePerformanceInsightsOutput
-}
-
-func (f SelfEvaluationFormWithInsights) Render(ctx context.Context, w io.Writer) error {
-	return templ.ComponentFunc(func(ctx context.Context, w io.Writer) error {
-		_, err := w.Write([]byte(`
-            <div>
-                <h2>Performance Insights</h2>
-                <p><strong>Strengths:</strong> {{ .Insights.Strengths }}</p>
-                <p><strong>Areas for Improvement:</strong> {{ .Insights.AreasForImprovement }}</p>
-            </div>
-        `))
-		return err
-	}).Render(ctx, w)
+        </body>
+        </html>
+    `
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte(html))
 }
 
 func selfEvaluationHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		// Render the form
-		if err := (SelfEvaluationForm{}).Render(context.Background(), w); err != nil {
-			http.Error(w, "Error rendering form", http.StatusInternalServerError)
-		}
+		renderSelfEvaluationForm(w)
 		return
 	}
 
@@ -103,9 +85,26 @@ func selfEvaluationHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Render the form with insights
-	formWithInsights := SelfEvaluationFormWithInsights{Insights: &insights}
-	if err := formWithInsights.Render(context.Background(), w); err != nil {
-		http.Error(w, "Error rendering form with insights", http.StatusInternalServerError)
-	}
+	// Render the insights
+	renderInsights(w, insights)
+}
+
+func renderInsights(w http.ResponseWriter, insights GeneratePerformanceInsightsOutput) {
+	html := fmt.Sprintf(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Performance Insights</title>
+        </head>
+        <body>
+            <h2>Performance Insights</h2>
+            <p><strong>Strengths:</strong> %s</p>
+            <p><strong>Areas for Improvement:</strong> %s</p>
+        </body>
+        </html>
+    `, insights.Strengths, insights.AreasForImprovement)
+
+	w.Header().Set("Content-Type", "text/html")
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write([]byte(html))
 }
