@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 )
 
@@ -19,7 +18,7 @@ type GeneratePerformanceInsightsOutput struct {
 }
 
 // generatePerformanceInsights calls a language model to generate performance insights.
-func generatePerformanceInsights(ctx context.Context, input GeneratePerformanceInsightsInput) (GeneratePerformanceInsightsOutput, error) {
+func generatePerformanceInsights(input GeneratePerformanceInsightsInput) (GeneratePerformanceInsightsOutput, error) {
 	// Placeholder implementation: Replace with actual LLM logic
 	fmt.Println("Generating performance insights for employee:", input.EmployeeID)
 
