@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback Form</title>
+</head>
+<body>
+    <h1>Feedback for: <span id="userName"></span></h1>
+    <h2>Self-Evaluation:</h2>
+    <p><strong>SME:</strong> <span id="self_sme"></span></p>
+    <p><strong>Strategic Thinking:</strong> <span id="self_strategicThinking"></span></p>
+    <p><strong>Execution:</strong> <span id="self_execution"></span></p>
+    <p><strong>Communication:</strong> <span id="self_communication"></span></p>
+    <p><strong>Customer Focus:</strong> <span id="self_customerFocus"></span></p>
+    <p><strong>Breadth of Influence:</strong> <span id="self_breadthOfInfluence"></span></p>
+
+    <form method="POST" action="/feedback">
+        <input type="hidden" id="userID" name="userID">
+        <label for="sme">SME Feedback:</label>
+        <input type="text" id="sme" name="sme"><br>
+        <label for="strategicThinking">Strategic Thinking Feedback:</label>
+        <input type="text" id="strategicThinking" name="strategicThinking"><br>
+        <label for="execution">Execution Feedback:</label>
+        <input type="text" id="execution" name="execution"><br>
+        <label for="communication">Communication Feedback:</label>
+        <input type="text" id="communication" name="communication"><br>
+        <label for="customerFocus">Customer Focus Feedback:</label>
+        <input type="text" id="customerFocus" name="customerFocus"><br>
+        <label for="breadthOfInfluence">Breadth of Influence Feedback:</label>
+        <input type="text" id="breadthOfInfluence" name="breadthOfInfluence"><br>
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+    <script>
+        // Function to pre-populate the form with self-evaluation data
+        function populateFeedbackForm(userID, userName, selfEval) {
+            document.getElementById("userID").value = userID;
+            document.getElementById("userName").textContent = userName;
+            document.getElementById("self_sme").textContent = selfEval.sme;
+            document.getElementById("self_strategicThinking").textContent = selfEval.strategicThinking;
+            document.getElementById("self_execution").textContent = selfEval.execution;
+            document.getElementById("self_communication").textContent = selfEval.communication;
+            document.getElementById("self_customerFocus").textContent = selfEval.customerFocus;
+            document.getElementById("self_breadthOfInfluence").textContent = selfEval.breadthOfInfluence;
+        }
+
+        // Example usage (replace with actual data retrieval)
+        const selfEvaluationData = {
+            sme: "Strengths in technical areas",
+            strategicThinking: "Good at long-term planning",
+            execution: "Consistently delivers on time",
+            communication: "Communicates effectively",
+            customerFocus: "Understands customer needs",
+            breadthOfInfluence: "Impacts team positively"
+        };
+
+        populateFeedbackForm("employee123", "John Doe", selfEvaluationData);
+    </script>
+</body>
+</html>

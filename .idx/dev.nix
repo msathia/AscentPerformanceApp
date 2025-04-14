@@ -1,45 +1,35 @@
-# To learn more about how to use Nix to configure your environment
-# see: https://firebase.google.com/docs/studio/customize-workspace
 {pkgs}: {
-  # Which nixpkgs channel to use.
-  channel = "stable-24.11"; # or "unstable"
-  # Use https://search.nixos.org/packages to find packages
+  channel = "unstable";
   packages = [
-    pkgs.go
-    pkgs.apt
+    pkgs.go_1_21
   ];
-  # Sets environment variables in the workspace
-  env = {};
+  env = {
+    # Add GOROOT for go.
+    # go will be available via PATH
+    GOROOT = "${pkgs.go_1_21}";
+    # Add PATH for go bins
+    PATH = "${pkgs.go_1_21}/bin:${pkgs.coreutils}/bin:$PATH";
+    # Add GOPATH for go
+    GOPATH = "$HOME/go";
+    # Add GOCACHE for go
+    GOCACHE = "$HOME/.cache/go-build";
+  };
   idx = {
-    # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       # "vscodevim.vim"
     ];
     workspace = {
-      onCreate = {
-        default.openFiles = [
-          "src/app/page.tsx"
-        ];
-      };
+      onCreate = {default.openFiles = ["main.go"];};
     };
-    # Enable previews and customize configuration
-    previews = {
-      enable = true;
-      previews = {
-        web = {
-          port = 8081;
-          command = [
-            "go"
-            "build"
-            "-o"
-            "performance-app"
-            "."
-          ] ++ [
-            "./performance-app"
-          ];
-          manager = "web";
-        };
-      };
+    previews.web = {
+      command = [
+        "go"
+        "run"
+        "main.go"
+      ];
+      port = 8080;
+      manager = "web";
     };
   };
 }
+

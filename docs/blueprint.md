@@ -1,6 +1,8 @@
+# Ascend Performance - Talent Review Application
+
 # **App Name**: Ascend Performance
 
-## Core Features:
+## Core Features
 
 - Role Hierarchy: Define and display a hierarchical role structure (VP, Director, Manager, IC) with progressive levels (IC1-IC8, M1-M3, D1-D2).
 - Self-Evaluation Submission: Enable employees to submit self-evaluations based on six criteria: SME, Strategic Thinking, Execution, Communication, Customer Focus, and Breadth of Influence.
@@ -10,14 +12,29 @@
 - Sequential Evaluation Process: Enable managers to submit self-evaluations which are then evaluated by their managers in turn. 
 
 ## Style Guidelines:
-
+###
 - Primary color: Teal (#008080) for a professional and trustworthy feel.
 - Secondary color: Light gray (#F0F0F0) for backgrounds and neutral elements.
 - Accent color: Gold (#FFD700) for highlighting key actions and important information.
 - Clean and modern typography for readability.
 - Use clear and consistent icons to represent different evaluation criteria and actions.
-- Well-organized layout with clear sections for self-evaluation, manager feedback, and performance insights.
+- Well-organized layout with clear sections for:
+  - Role Hierarchy definition.
+  - Self-evaluation.
+  - Manager feedback.
+  - Performance insights.
 
 ## Original User Request:
+
+### Role Hierarchy:
+    - VP
+    - Directors (D1, D2)
+    - Managers (M1, M2, M3)
+    - ICs (IC1, IC2, IC3, IC4, IC5, IC6, IC7, IC8)
+### Submission and Feedback:
+    - each employee submits a self evaluation, based on the below 6 criteria
+    - SME, Strategic Thinking, Execution, Communication, Customer Focus and breadth of influence
+    - Managers have access to their IC's evaluations
+    - Sequentially, at each level Managers will do self evaluation and their managers(M3s or D1s) will do their evaluation. Similarly D1s will submit theirs to D2s or VPs.
 Create a talent review application. This should include a set of hierarchical roles. VP, Directors, Managers, and ICs. ICs, Manager, Directors have the levels. IC1  to IC8, Managers have M1-M3. Directors have D1 and D2. Each one of those levels are progressive. Each Employee can submit their self evaluation based 6 criterias SME, Strategic Thinking, Execution, Communication,  Customer Focus and breadth of influence. The managers have access to self evaluation of ICs and they provide their feedback on those 6 critierias Sequentially, at each level Managers will do self evaluation and their managers(M3s or D1s) will do their evaluation. Similarly D1s will submit theirs to D2s or VPs. Add this
   
