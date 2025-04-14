@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Self Evaluation</title>
+    <script src="https://unpkg.com/htmx.org"></script>
 </head>
+
 <body>
     <form method="POST" action="/self-evaluation">
         <label for="userID">User ID:</label>
         <input type="text" id="userID" name="userID"><br>
         <label for="sme">SME:</label>
-        <input type="text" id="sme" name="sme"><br>
+        <input type="text" id="sme" name="sme" required><br>
         <label for="strategicThinking">Strategic Thinking:</label>
-        <input type="text" id="strategicThinking" name="strategicThinking"><br>
+        <input type="text" id="strategicThinking" name="strategicThinking" required><br>
         <label for="execution">Execution:</label>
-        <input type="text" id="execution" name="execution"><br>
+        <input type="text" id="execution" name="execution" required><br>
         <label for="communication">Communication:</label>
-        <input type="text" id="communication" name="communication"><br>
+        <input type="text" id="communication" name="communication" required><br>
         <label for="customerFocus">Customer Focus:</label>
-        <input type="text" id="customerFocus" name="customerFocus"><br>
+        <input type="text" id="customerFocus" name="customerFocus" required><br>
         <label for="breadthOfInfluence">Breadth of Influence:</label>
-        <input type="text" id="breadthOfInfluence" name="breadthOfInfluence"><br>
+        <input type="text" id="breadthOfInfluence" name="breadthOfInfluence" required><br>
         <button type="submit">Submit</button>
     </form>
+
+    <!-- Placeholder for performance insights -->
+    <div id="insights">
+        <p>Submit the form to see performance insights.</p>
+    </div>
 </body>
+
 </html>
