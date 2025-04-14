@@ -17,18 +17,21 @@
   idx = {
     extensions = [
       # "vscodevim.vim"
+      "golang.go"
     ];
     workspace = {
       onCreate = {default.openFiles = ["main.go"];};
     };
-    previews.web = {
-      command = [
-        "go"
-        "run"
-        "main.go"
-      ];
-      port = 8080;
-      manager = "web";
+    previews = {
+        web = {
+          command = [
+            "go"
+            "run"
+            "main.go"
+          ];
+          port = 8080;
+          manager = "web";
+        };
     };
   };
 }
