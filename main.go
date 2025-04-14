@@ -5,51 +5,58 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 )
 
+// Main entry point of the application.
 func main() {
 	http.HandleFunc("/self-evaluation", selfEvaluationHandler)
-	fmt.Println("Server listening on :8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+
+	// Use a configurable port with a default fallback.
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8081"
+	}
+
+	fmt.Printf("Server listening on :%s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
 
 // Render the self-evaluation form as plain HTML.
-func renderSelfEvaluationForm(w http.ResponseWriter) {	
+func renderSelfEvaluationForm(w http.ResponseWriter) {
 	w.Header().Set("Content-Type", "text/html")
-	w.WriteHeader(http.StatusOK)
-	tmpl, err := template.ParseFiles("go_project/templates/self_evaluation_form.html")
 
+	// Correct the template file path.
+	tmpl, err := template.ParseFiles("./templates/self_evaluation_form.html")
 	if err != nil {
 		log.Println("Error parsing template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
-	err = tmpl.Execute(w, nil)
-
-	if err != nil {
+	// Execute the template without any dynamic data.
+	if err := tmpl.Execute(w, nil); err != nil {
 		log.Println("Error executing template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
 	}
 }
 
+// Handle the self-evaluation form submission.
 func selfEvaluationHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
-		// Render the form
+		// Render the form for GET requests.
 		renderSelfEvaluationForm(w)
 		return
 	}
 
-	// Handle form submission
+	// Handle form submission for POST requests.
 	if err := r.ParseForm(); err != nil {
 		http.Error(w, "Error parsing form", http.StatusBadRequest)
 		return
 	}
 
-	// Validate form fields
+	// Validate required form fields.
 	requiredFields := []string{"sme", "strategicThinking", "execution", "communication", "customerFocus", "breadthOfInfluence"}
-
 	for _, field := range requiredFields {
 		if r.Form.Get(field) == "" {
 			http.Error(w, fmt.Sprintf("Missing required field: %s", field), http.StatusBadRequest)
@@ -57,8 +64,9 @@ func selfEvaluationHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// Populate the input structure for generating insights.
 	input := GeneratePerformanceInsightsInput{
-		EmployeeID: "123", // Dummy employee ID - will be replaced later
+		EmployeeID: "123", // Dummy employee ID - replace with dynamic logic if needed.
 		SelfEvaluation: map[string]string{
 			"sme":                r.Form.Get("sme"),
 			"strategicThinking":  r.Form.Get("strategicThinking"),
@@ -77,34 +85,38 @@ func selfEvaluationHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	// Generate performance insights
+	// Generate performance insights.
 	insights, err := generatePerformanceInsights(input)
-
 	if err != nil {
 		http.Error(w, "Error generating insights", http.StatusInternalServerError)
 		return
 	}
 
-	// Render the insights
+	// Render the insights.
 	renderInsights(w, insights)
 }
 
+// Render the performance insights as plain HTML.
 func renderInsights(w http.ResponseWriter, insights GeneratePerformanceInsightsOutput) {
 	w.Header().Set("Content-Type", "text/html")
-	w.WriteHeader(http.StatusOK)
-	tmpl, err := template.ParseFiles("go_project/templates/performance_insights.html")
 
+	// Inline template for rendering insights.
+	const insightsHTML = `
+        <h2>Performance Insights</h2>
+        <p><strong>Strengths:</strong> {{.Strengths}}</p>
+        <p><strong>Areas for Improvement:</strong> {{.AreasForImprovement}}</p>
+    `
+
+	tmpl, err := template.New("insights").Parse(insightsHTML)
 	if err != nil {
 		log.Println("Error parsing template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
 
-	err = tmpl.Execute(w, insights)
-
-	if err != nil {
+	// Execute the template with the insights data.
+	if err := tmpl.Execute(w, insights); err != nil {
 		log.Println("Error executing template:", err)
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
 	}
 }
